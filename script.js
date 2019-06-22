@@ -27,12 +27,16 @@ function requestApi(url){ //url берем из переменной server
 
 
     request.addEventListener('readystatechange', () =>{
-        if (request.readyState !== 4) return; 
+        if (request.readyState !== 4) {
+            movie.innerHTML = 'Загрузка...'; //выводим в окно надпись, пока readystate не дойдет до 4
+            return
+        }; 
 
         if(request.status !== 200){
-        console.log('ERROR ' + request.status);
-        return;
-    }
+            movie.innerHTML = 'Упс, что-то пошло не так';//выводим в окно надпись если обнаружена ошибка
+            console.log('ERROR ' + request.status);
+            return;
+        }   
 
 
     const output = JSON.parse(request.responseText); //request.responseText - получили опсиание нашего запроса. Это json строка. переводим ее в обычный объект, с помощью метода parse
